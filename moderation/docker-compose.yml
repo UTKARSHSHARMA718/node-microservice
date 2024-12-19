@@ -1,0 +1,8 @@
+version: "3"
+services:
+  posts:
+    build: .
+    ports:
+      - "4003:4003"
+    environment:
+      - NODE_ENV=development
