@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: utkarsh7sharma/client
+      context: client # name of the folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js' # replace the change file directly by copy and pasting the file into the pod
+            dest: .
+    - image: utkarsh7sharma/posts
+      context: posts # name of the folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' # replace the change file directly by copy and pasting the file into the pod
+            dest: .
+    - image: utkarsh7sharma/comments
+      context: comments # name of the folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' # replace the change file directly by copy and pasting the file into the pod
+            dest: .
+    - image: utkarsh7sharma/query
+      context: query # name of the folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' # replace the change file directly by copy and pasting the file into the pod
+            dest: .
+    - image: utkarsh7sharma/event-bus
+      context: event-bus # name of the folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' # replace the change file directly by copy and pasting the file into the pod
+            dest: .
+    - image: utkarsh7sharma/moderation
+      context: moderation # name of the folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' # replace the change file directly by copy and pasting the file into the pod
+            dest: .

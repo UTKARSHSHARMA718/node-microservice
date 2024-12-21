@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-srv # can be anything since its a name
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true' #to use regex for checking
+spec:
+  rules:
+    - host: posts.com # ??
+      http: 
+        paths: 
+          - path: /posts/create # catch all the request with routes /posts in it
+            backend:
+              serviceName: posts-clusterip-srv # re-direct to posts service cluster id
+              servicePort: 4000
+          - path: /posts # catch all the request with routes /posts in it
+            backend:
+              serviceName: query-clusterip-srv # re-direct to posts service cluster id
+              servicePort: 4002
+          - path: /posts/?(.*)/comments # catch all the request with routes /posts in it
+            backend:
+              serviceName: comments-clusterip-srv # re-direct to posts service cluster id
+              servicePort: 4001
+          - path: /?(.*)
+            backend:
+              serviceName: client-clusterip-srv # re-direct to posts service cluster id
+              servicePort: 3000
+
+
+
+# we also need to add this below line in the windows hosts file 
+# which can be found at C://windows/system32/drivers/etc/hosts
+
+# custom configuration to make kubernetes work for microservice
+# 127.0.0.1 posts.com

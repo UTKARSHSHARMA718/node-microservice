@@ -41,3 +41,9 @@
 
 noose
 knit
+
+# Skaffold
+
+### To start skaffold
+- skaffold dev
+- (Make sure you are using 'nodemon' in node applications for re-starting the app once the skaffold update the changes file into the project directory)
